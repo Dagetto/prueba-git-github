@@ -18,12 +18,14 @@ class DataBase:
             # self.conexion_mongo = self.client
             self.client = pymongo.MongoClient("localhost", 27017)
             self.db = self.client[d_val]
-            self.collection = self.db["test-collection"]
+            self.collection = self.db["Productos"]
             self.mi_diccionario = {"producto": "", "precio": "", "cantidad": ""}
             self.registro = self.collection.insert_one(self.mi_diccionario)
             print(self.registro)
         elif e_val == "R":
             self.con = sqlite3.connect(d_val)
+            return self.con
+        try:
             cursor = self.con.cursor()
             sql = """CREATE TABLE productos
                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,14 +35,21 @@ class DataBase:
             """
             cursor.execute(sql)
             self.con.commit()
-        else:
+        except:
             pass
 
 
 class Abmc(
     DataBase
 ):  # No estoy seguro si ABMC debia ser una clase hija porque no esta especificado en el enunciado.
-    def alta(self, d_val, producto, cantidad, precio, tree):
+    def alta(
+        self,
+        producto,
+        cantidad,
+        precio,
+        tree,
+        d_val,
+    ):
         cadena = producto
         patron = "^[A-Za-záéíóú]*$"  # regex para el campo cadena
         if re.match(patron, cadena):
@@ -54,11 +63,11 @@ class Abmc(
             cursor.execute(sql, data)
             self.con.commit()
             print("Estoy en alta todo ok")
-            self.actualizar_treeview(tree)
+            # self.actualizar_treeview(tree)
         else:
             print("error en campo producto")
 
-    def actualizar_treeview(self, mitreview):
+    def actualizar_treeview(self, mitreview, d_val):
         records = mitreview.get_children()
         for element in records:
             mitreview.delete(element)

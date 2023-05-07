@@ -37,7 +37,7 @@ class Panel:
         self.precio.grid(row=3, column=0, sticky=W)
         self.base_datos = Label(self.root, text="Nombre BD")
         self.base_datos.grid(row=1, column=2, sticky=W)
-        self.tipo_base_datos = Label(self.root, text="Tipo de BD")
+        self.tipo_base_datos = Label(self.root, text="Tipo de BD [R/NR]")
         self.tipo_base_datos.grid(row=2, column=2, sticky=W)
 
         # Defino variables para tomar valores de campos de entrada
@@ -90,6 +90,7 @@ class Panel:
                 self.b_val.get(),
                 self.c_val.get(),
                 self.tree,
+                self.d_val.get(),
             ),
         )
         self.boton_alta.grid(row=6, column=1)

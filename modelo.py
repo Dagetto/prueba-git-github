@@ -25,6 +25,7 @@ class DataBase:
         elif e_val == "R":
             self.con = sqlite3.connect(d_val)
             return self.con
+            print("pasa bloque conexion")
         try:
             cursor = self.con.cursor()
             sql = """CREATE TABLE productos
@@ -82,27 +83,26 @@ class Abmc(
             print(fila)
             mitreview.insert("", 0, text=fila[0], values=(fila[1], fila[2], fila[3]))
 
-
-"""
-    def consultar():
+    def consultar(self):
         global compra
         print(compra)
 
-def borrar(tree):
-    valor = tree.selection()
-    print(valor)   #('I005',)
-    item = tree.item(valor)
-    print(item)    #{'text': 5, 'image': '', 'values': ['daSDasd', '13.0', '2.0'], 'open': 0, 'tags': ''}
-    print(item['text'])
-    mi_id = item['text']
+    def borrar(self, tree, d_val):
+        valor = tree.selection()
+        print(valor)  # ('I005',)
+        item = tree.item(valor)
+        print(
+            item
+        )  # {'text': 5, 'image': '', 'values': ['daSDasd', '13.0', '2.0'], 'open': 0, 'tags': ''}
+        print(item["text"])
+        mi_id = item["text"]
 
-    con=conexion()
-    cursor=con.cursor()
-    #mi_id = int(mi_id)
-    data = (mi_id,)
-    sql = "DELETE FROM productos WHERE id = ?;"
-    cursor.execute(sql, data)
-    con.commit()
-    tree.delete(valor)
+        self.con = sqlite3.connect(d_val)
+        cursor = self.con.cursor()
+        # mi_id = int(mi_id)
+        data = (mi_id,)
+        sql = "DELETE FROM productos WHERE id = ?;"
+        cursor.execute(sql, data)
+        self.con.commit()
 
-"""
+        tree.delete(valor)

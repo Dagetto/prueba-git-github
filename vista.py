@@ -19,7 +19,7 @@ class Panel:
             height=1,
             width=60,
         )
-        self.titulo.grid(row=0, column=0, columnspan=4, padx=1, pady=1, sticky=W + E)
+        self.titulo.grid(row=0, column=0, columnspan=5, padx=1, pady=1, sticky=W + E)
 
         try:
             print("pasa codigo")
@@ -102,22 +102,20 @@ class Panel:
                 self.e_val.get(),
             ),
         )
-        self.boton_bd.grid(row=6, column=3)
+        self.boton_bd.grid(row=2, column=4)
 
+        self.boton_consulta = Button(
+            root, text="Consultar", command=lambda: self.objeto1.consultar()
+        )
+        self.boton_consulta.grid(row=6, column=2)
 
-"""
+        self.boton_borrar = Button(
+            root,
+            text="Borrar",
+            command=lambda: self.objeto1.borrar(self.tree, self.d_val.get()),
+        )
+        self.boton_borrar.grid(row=6, column=3)
 
-
-
-
-boton_consulta=Button(root, text="Consultar", command=lambda:modelo.consultar())
-boton_consulta.grid(row=7, column=1)
-
-boton_borrar=Button(root, text="Borrar", command=lambda:modelo.borrar(tree))
-boton_borrar.grid(row=8, column=1)
-
- 
-"""
 
 # #####################################
 # Para mi futuro controlador

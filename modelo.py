@@ -63,7 +63,7 @@ class Abmc(
             cursor.execute(sql, data)
             self.con.commit()
             print("Estoy en alta todo ok")
-            # self.actualizar_treeview(tree)
+            self.actualizar_treeview(tree, d_val)
         else:
             print("error en campo producto")
 

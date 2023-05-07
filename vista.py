@@ -64,7 +64,6 @@ class Panel:
         # -------------------------------------------------
         self.objeto1 = modelo.Abmc()
         self.objeto = modelo.DataBase()
-        # self.objeto = modelo.DataBase()
 
         # --------------------------------------------------
         # TREEVIEW

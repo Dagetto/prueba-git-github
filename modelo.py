@@ -15,13 +15,14 @@ class DataBase:
 
     def conexion_bd(self, d_val, e_val):
         if e_val == "NR":
-            # self.conexion_mongo = self.client
             self.client = pymongo.MongoClient("localhost", 27017)
             self.db = self.client[d_val]
             self.collection = self.db["Productos"]
             self.mi_diccionario = {"producto": "", "precio": "", "cantidad": ""}
             self.registro = self.collection.insert_one(self.mi_diccionario)
             print(self.registro)
+        elif e_val == "":
+            print("ingresar tipo de BD")
         elif e_val == "R":
             self.con = sqlite3.connect(d_val)
             return self.con
@@ -40,9 +41,7 @@ class DataBase:
             pass
 
 
-class Abmc(
-    DataBase
-):  # No estoy seguro si ABMC debia ser una clase hija porque no esta especificado en el enunciado.
+class Abmc(DataBase):
     def alta(
         self,
         producto,
@@ -57,8 +56,6 @@ class Abmc(
             print(producto, cantidad, precio)
             self.con = sqlite3.connect(d_val)
             cursor = self.con.cursor()
-            # con = self.conexion()
-            # cursor = con.cursor()
             data = (producto, cantidad, precio)
             sql = "INSERT INTO productos(producto, cantidad, precio) VALUES(?, ?, ?)"
             cursor.execute(sql, data)
@@ -83,23 +80,39 @@ class Abmc(
             print(fila)
             mitreview.insert("", 0, text=fila[0], values=(fila[1], fila[2], fila[3]))
 
-    def consultar(self):
-        global compra
-        print(compra)
+    def modifica(
+        self,
+        producto,
+        cantidad,
+        precio,
+        tree,
+        d_val,
+    ):
+        valor = tree.selection()
+        item = tree.item(valor)
+        mi_id = item["text"]
+        sql = "UPDATE Usuarios SET producto = ?, cantidad = ?, precio = ?, WHERE id = ?"
+        data = (
+            producto,
+            cantidad,
+            precio,
+            mi_id,
+        )
+        self.con = sqlite3.connect(d_val)
+        cursor = self.con.cursor()
+        cursor.execute(sql, data)
+        self.con.commit()
 
     def borrar(self, tree, d_val):
         valor = tree.selection()
-        print(valor)  # ('I005',)
+        print(valor)
         item = tree.item(valor)
-        print(
-            item
-        )  # {'text': 5, 'image': '', 'values': ['daSDasd', '13.0', '2.0'], 'open': 0, 'tags': ''}
+        print(item)
         print(item["text"])
         mi_id = item["text"]
 
         self.con = sqlite3.connect(d_val)
         cursor = self.con.cursor()
-        # mi_id = int(mi_id)
         data = (mi_id,)
         sql = "DELETE FROM productos WHERE id = ?;"
         cursor.execute(sql, data)

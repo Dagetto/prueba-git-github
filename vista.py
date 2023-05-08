@@ -23,10 +23,6 @@ class Panel:
 
         try:
             print("pasa codigo")
-            # self.objeto.conexion_mongo()
-            # self.objeto.crear_tablanr()
-            # self.objeto.conexion()
-            # self.objeto.crear_tabla()
         except:
             print("Error")
         self.producto = Label(self.root, text="Producto")
@@ -79,7 +75,7 @@ class Panel:
         self.tree.heading("col1", text="Producto")
         self.tree.heading("col2", text="cantidad")
         self.tree.heading("col3", text="precio")
-        self.tree.grid(row=10, column=0, columnspan=4)
+        self.tree.grid(row=10, column=0, columnspan=5)
 
         self.boton_alta = Button(
             self.root,
@@ -104,10 +100,28 @@ class Panel:
         )
         self.boton_bd.grid(row=2, column=4)
 
-        self.boton_consulta = Button(
-            root, text="Consultar", command=lambda: self.objeto1.consultar()
+        self.boton_modifica = Button(
+            root,
+            text="Modificar",
+            command=lambda: self.objeto1.modifica(
+                self.a_val,
+                self.b_val,
+                self.c_val,
+                self.d_val,
+                self.tree,
+            ),
         )
-        self.boton_consulta.grid(row=6, column=2)
+        self.boton_modifica.grid(row=6, column=2)
+
+        self.boton_consulta = Button(
+            root,
+            text="Consulta",
+            command=lambda: self.objeto1.actualizar_treeview(
+                self.tree, self.d_val.get()
+            ),
+        )
+
+        self.boton_consulta.grid(row=6, column=4)
 
         self.boton_borrar = Button(
             root,

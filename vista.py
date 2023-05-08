@@ -59,6 +59,7 @@ class Panel:
 
         # -------------------------------------------------
         self.objeto1 = modelo.Abmc()
+
         self.objeto = modelo.DataBase()
 
         # --------------------------------------------------
@@ -86,6 +87,7 @@ class Panel:
                 self.c_val.get(),
                 self.tree,
                 self.d_val.get(),
+                self.e_val.get(),
             ),
         )
         self.boton_alta.grid(row=6, column=1)
@@ -117,7 +119,9 @@ class Panel:
             root,
             text="Consulta",
             command=lambda: self.objeto1.actualizar_treeview(
-                self.tree, self.d_val.get()
+                self.tree,
+                self.d_val.get(),
+                self.e_val.get(),
             ),
         )
 
@@ -126,7 +130,9 @@ class Panel:
         self.boton_borrar = Button(
             root,
             text="Borrar",
-            command=lambda: self.objeto1.borrar(self.tree, self.d_val.get()),
+            command=lambda: self.objeto1.borrar(
+                self.tree, self.d_val.get(), self.e_val.get(), self.a_val.get()
+            ),
         )
         self.boton_borrar.grid(row=6, column=3)
 
